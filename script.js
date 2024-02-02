@@ -1,78 +1,72 @@
-/* 
-1º Elementos DOM
-2º Variables js
-3º initApp
-- listener
-*/
+// seleccionar elementos del DOM
 
-// INICIALIZAR APP
+const btnNew = document.querySelector('.btn--new')
+const btnRoll = document.querySelector('.btn--roll')
+const btnHold = document.querySelector('.btn--hold')
+const diceEl = document.querySelector('.dice')
+const score0El = document.querySelector('#score--0')
+const score1El = document.querySelector('#score--1')
+const current0El = document.querySelector('#current--0')
+const current1El = document.querySelector('#current--1')
+const player0El = document.querySelector('.player--0')
+const player1El = document.querySelector('.player--1')
 
-//
-let ScoreInicial = 0
-let dado
+// const btnHold = document.getElementsByClassName('btn--hold')[0]
 
-// SELECCIÓN ELEMENTOS DOM
-const totalScoreP1 = document.querySelector('#score--0')
-const totalScoreP2 = document.querySelector('#score--1')
-const currentScoreP1 = document.querySelector('#current--0')
-const currentScoreP2 = document.querySelector('#current--1')
+let currentScore, scores, activePlayer
 
-const btnRoll = document.querySelector('.btn--roll') /* BOTON ROLL */
-const btnHold = document.querySelector('.btn--hold') /* BOTON HOLD */
-const btnNew = document.querySelector('.btn--new') /* BOTON NEW */
-console.log(btnRoll, btnHold, btnNew)
+const init = function () {
+  currentScore = 0
+  activePlayer = 0
+  scores = [0, 0]
+  // diceEl.classList.add('hidden')
+  diceEl.style.display = 'none'
+  score0El.textContent = 0
+  score1El.textContent = 0
+  current0El.textContent = 0
+  current1El.textContent = 0
+}
 
-const imagen = document.querySelector('.dice')
-/* imagen.setAttribute('src', 'img/dice-1.png') */
-/* console.log(imagen) */
+init()
 
-///
+console.log(btnNew, btnRoll, btnHold)
+
 btnRoll.addEventListener('click', () => {
-  dado = Math.trunc(Math.random() * 6 + 1)
-  console.log(dado)
-  switch (dado) {
-  case 1:
-    imagen.setAttribute('src', 'img/dice-1.png')
-    break
-  case 2:
-    imagen.setAttribute('src', 'img/dice-2.png')
-    break
-  case 3:
-    imagen.setAttribute('src', 'img/dice-3.png')
-    break
-  case 4:
-    imagen.setAttribute('src', 'img/dice-4.png')
-    break
-  case 5:
-    imagen.setAttribute('src', 'img/dice-5.png')
-    break
-  case 6:
-    imagen.setAttribute('src', 'img/dice-6.png')
-    break
-  default: imagen.setAttribute('src', 'img/dice-5.png')
-  }
-  if (dado === 1) {
-    //pierdes turno
+  // sacas un número del 1 al 6
+  const dice = Math.trunc(Math.random() * 6) + 1
+
+  // mostrar el dado
+  diceEl.style.display = 'block'
+  diceEl.src = `dice-${dice}.png`
+
+  if (dice === 1) {
+    // TODO: cambiar de jugador
+    // variable activePlayer
+    // color css
+    // currentScore a 0
+    switchtPlayer()
   } else {
-    // sumar número al currentScore
-    
+    // sumar el dado al current score
+    currentScore += dice
+    // TODO: seleccionar de forma dinámica el textContent
+    document.querySelector(`#current--${activePlayer}`).textContent =
+      currentScore
+    // current0El.textContent = currentScore
   }
-
-
 })
-//
-btnHold.addEventListener('click', () => {
-  console.log('hold')
-})
-//
+
 btnNew.addEventListener('click', () => {
-  console.log('new')
+  console.log('New game')
 })
-///
 
-totalScoreP1.textContent = ScoreInicial
-totalScoreP2.textContent = ScoreInicial
-currentScoreP1.textContent = ScoreInicial
-currentScoreP2.textContent = ScoreInicial
+btnHold.addEventListener('click', () => {
+  switchtPlayer()
+})
 
-// console.log()
+function switchtPlayer() {
+  document.querySelector(`#current--${activePlayer}`).textContent = 0
+  currentScore = 0
+  activePlayer = activePlayer === 0 ? 1 : 0
+  
+  player0El.classList.toggle('player--active')
+  player1El.classList.toggle('player--active')
