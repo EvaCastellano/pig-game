@@ -48,7 +48,6 @@ btnRoll.addEventListener('click', () => {
   } else {
     // sumar el dado al current score
     currentScore += dice
-    // TODO: seleccionar de forma dinámica el textContent
     document.querySelector(`#current--${activePlayer}`).textContent =
       currentScore
     // current0El.textContent = currentScore
