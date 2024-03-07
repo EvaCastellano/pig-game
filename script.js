@@ -55,7 +55,7 @@ btnRoll.addEventListener('click', () => {
   }
 })
 
-btnNew.addEventListener('click', (init()))
+btnNew.addEventListener('click', init)
 
 btnHold.addEventListener('click', () => {
   // añadir currentScore al totalScore del jugador activo
@@ -68,8 +68,17 @@ btnHold.addEventListener('click', () => {
     document
       .querySelector(`.player--${activePlayer}`)
       .classList.add('player--winner')
+    document
+      .querySelector(`.player--${activePlayer}`)
       .classList.remove('player--active')
     // ocultamos el dado
+    console.log(document.querySelector(`.player--${activePlayer}`))
+    console.log(
+      document
+        .querySelector(`.player--${activePlayer}`)
+        .classList.remove('player--active'),
+    )
+    diceEl.style.display = 'none'
   } else {
     // cambiamos de jugador
     switchtPlayer()
